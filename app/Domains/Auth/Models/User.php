@@ -22,7 +22,6 @@ use Lab404\Impersonate\Models\Impersonate;
 use Laravel\Sanctum\HasApiTokens;
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 use Spatie\Permission\Traits\HasRoles;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 use Laragear\TwoFactor\TwoFactorAuthentication;
 use Laragear\TwoFactor\Contracts\TwoFactorAuthenticatable;
@@ -30,7 +29,7 @@ use Laragear\TwoFactor\Contracts\TwoFactorAuthenticatable;
 /**
  * Class User.
  */
-class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenticatable, JWTSubject
+class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenticatable
 {
     use AuthenticationLoggable,
         TwoFactorAuthentication,
@@ -121,27 +120,6 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'permissions',
         'roles',
     ];
-
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
 
     /**
      * Send the password reset notification.

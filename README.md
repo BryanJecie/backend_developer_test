@@ -16,6 +16,7 @@ git clone git@github.com:BryanJecie/backend_developer_test.git
 ### Running the Application
 
 1. Clone the repository to your local machine.
+2. Run `cp .env.example .env` to setup your env variables.
 2. Run `composer install` to install the required dependencies.
 3. Run `npm install && npm run dev` to install the required frontend dependencies.
 4. Run `php artisan key:generate` to generate a new application key.
