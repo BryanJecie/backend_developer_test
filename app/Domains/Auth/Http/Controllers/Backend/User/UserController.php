@@ -10,6 +10,7 @@ use App\Domains\Auth\Models\User;
 use App\Domains\Auth\Services\PermissionService;
 use App\Domains\Auth\Services\RoleService;
 use App\Domains\Auth\Services\UserService;
+use Illuminate\Http\Request;
 
 /**
  * Class UserController.
@@ -129,5 +130,35 @@ class UserController
         $this->userService->delete($user);
 
         return redirect()->route('admin.auth.user.deleted')->withFlashSuccess(__('The user was successfully deleted.'));
+    }
+
+    /**
+     * @param  Request  $request
+     * @return mixed
+     *
+     */
+    public function getAllUsers(Request $request)
+    {
+        $users = $this->userService->getAll();
+
+        return response()->json($users);
+    }
+
+    /**
+     * @param  Request  $request
+     * @return mixed
+     *
+     */
+    public function toDeleteUser(Request $request)
+    {
+        $user =  User::find($request->user_id);
+
+        if ($user->id === auth()->id()) {
+            return response()->json(['error' => 'You cannot delete yourself'], 403);
+        }
+
+        $users = $this->userService->delete($user);
+
+        return response()->json($user);
     }
 }

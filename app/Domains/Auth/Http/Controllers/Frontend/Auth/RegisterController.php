@@ -79,16 +79,16 @@ class RegisterController
                 'required',
                 'confirmed',
                 'string',
-                Password::min(6)
-                    ->letters()
-                    // ->mixedCase()
-                    // ->numbers()
-                    // ->symbols()
-                    ->uncompromised()
+                Password::min(6),
+                // ->letters()
+                // ->mixedCase()
+                // ->numbers()
+                // ->symbols()
+                // ->uncompromised()
             ],
 
 
-            'terms' => ['required', 'in:1'],
+            // 'terms' => ['required', 'in:1'],
             'g-recaptcha-response' => ['required_if:captcha_status,true', new Captcha],
         ], [
             'terms.required' => __('You must accept the Terms & Conditions.'),

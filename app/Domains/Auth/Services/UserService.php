@@ -31,6 +31,13 @@ class UserService extends BaseService
     }
 
     /**
+     * @return mixed
+     */
+    public function getAll()
+    {
+        return $this->model::all();
+    }
+    /**
      * @param $type
      * @param  bool|int  $perPage
      * @return mixed
@@ -120,7 +127,9 @@ class UserService extends BaseService
                 'password' => $data['password'],
                 'email_verified_at' => now(),
                 // 'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
-                'active' => isset($data['active']) && $data['active'] === '1',
+                // 'active' => isset($data['active']) && $data['active'] === '1',
+                // 'active' => isset($data['active']) && $data['active'] === '1',
+                'active' => '1'
             ]);
 
             $user->syncRoles($data['roles'] ?? []);
@@ -139,9 +148,9 @@ class UserService extends BaseService
         DB::commit();
 
         // They didn't want to auto verify the email, but do they want to send the confirmation email to do so?
-        if (!isset($data['email_verified']) && isset($data['send_confirmation_email']) && $data['send_confirmation_email'] === '1') {
-            $user->sendEmailVerificationNotification();
-        }
+        // if (!isset($data['email_verified']) && isset($data['send_confirmation_email']) && $data['send_confirmation_email'] === '1') {
+        //     $user->sendEmailVerificationNotification();
+        // }
 
         return $user;
     }
@@ -327,8 +336,8 @@ class UserService extends BaseService
             'password' => $data['password'] ?? null,
             'provider' => $data['provider'] ?? null,
             'provider_id' => $data['provider_id'] ?? null,
-            'email_verified_at' => $data['email_verified_at'] ?? null,
-            'active' => $data['active'] ?? true,
+            'email_verified_at' => now(),
+            'active' => 1,
         ]);
     }
 }

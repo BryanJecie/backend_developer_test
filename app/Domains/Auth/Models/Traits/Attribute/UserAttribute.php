@@ -101,12 +101,4 @@ trait UserAttribute
             return "{$firstName} {$lastName}";
         });
     }
-
-    public function hasCompany(): Attribute
-    {
-        return new Attribute(function () {
-            $company = CompanyUser::where('user_id', $this->id)->first();
-            return $company?->company;
-        });
-    }
 }

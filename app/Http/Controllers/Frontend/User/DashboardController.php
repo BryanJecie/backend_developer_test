@@ -12,6 +12,7 @@ class DashboardController
      */
     public function index()
     {
-        return view('frontend.user.dashboard');
+        return redirect()->route('frontend.user.products');
+        // return view('frontend.user.dashboard');
     }
 }

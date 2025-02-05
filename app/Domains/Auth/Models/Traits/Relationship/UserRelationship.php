@@ -17,9 +17,4 @@ trait UserRelationship
     {
         return $this->morphMany(PasswordHistory::class, 'model');
     }
-
-    public function companyUser()
-    {
-        return $this->setConnection('mysql')->hasOne(CompanyUser::class, 'user_id')->with('company');
-    }
 }

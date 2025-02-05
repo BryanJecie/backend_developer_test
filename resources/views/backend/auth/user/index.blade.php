@@ -1,15 +1,11 @@
 @extends('backend.layouts.app')
 
-@section('title', __('User Management'))
-
-@section('breadcrumb-links')
-    @include('backend.auth.user.includes.breadcrumb-links')
-@endsection
+@section('title', __('Users'))
 
 @section('content')
     <x-backend.card>
         <x-slot name="header">
-            @lang('User Management')
+            @lang('Users')
         </x-slot>
 
         @if ($logged_in_user->hasAllAccess())
@@ -19,7 +15,7 @@
         @endif
 
         <x-slot name="body">
-            <livewire:backend.users-table />
+            <admin-user />
         </x-slot>
     </x-backend.card>
 @endsection

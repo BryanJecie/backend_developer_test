@@ -8,7 +8,7 @@
             <div class="col-md-12">
                 <x-frontend.card>
                     <x-slot name="header">
-                        @lang('Dashboard')
+                        @lang('List of Purchases')
                     </x-slot>
 
                     <x-slot name="body">

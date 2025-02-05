@@ -20,8 +20,12 @@ Route::group([
         'prefix' => 'user',
         'as' => 'user.',
     ], function () {
+
+        Route::get('/all-users', [UserController::class, 'getAllUsers']);
+        Route::delete('/delete-user', [UserController::class, 'toDeleteUser']);
+
         Route::group([
-            'middleware' => 'role:'.config('boilerplate.access.role.admin'),
+            'middleware' => 'role:' . config('boilerplate.access.role.admin'),
         ], function () {
             Route::get('deleted', [DeletedUserController::class, 'index'])
                 ->name('deleted')
@@ -112,7 +116,7 @@ Route::group([
     Route::group([
         'prefix' => 'role',
         'as' => 'role.',
-        'middleware' => 'role:'.config('boilerplate.access.role.admin'),
+        'middleware' => 'role:' . config('boilerplate.access.role.admin'),
     ], function () {
         Route::get('/', [RoleController::class, 'index'])
             ->name('index')

@@ -71,10 +71,12 @@
                         <label for="active" class="col-md-2 col-form-label">@lang('Active')</label>
 
                         <div class="col-md-10">
-                            <div class="form-check">
+                            <i class="fa fa-check-square text-success" aria-hidden="true"></i>
+                            {{-- <div class="form-check">
                                 <input name="active" id="active" class="form-check-input" type="checkbox" value="1"
-                                    {{ old('active', true) ? 'checked' : '' }} />
-                            </div><!--form-check-->
+                                     {{ old('active', true) ? 'checked' : '' }} />
+                            </div> --}}
+                            <!--form-check-->
                         </div>
                     </div><!--form-group-->
 

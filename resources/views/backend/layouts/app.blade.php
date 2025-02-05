@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ htmlLang() }}" @langrtl dir="rtl" @endlangrtl>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,10 +15,11 @@
     <livewire:styles />
     @stack('after-styles')
 </head>
+
 <body class="c-app">
     @include('backend.includes.sidebar')
 
-    <div class="c-wrapper c-fixed-components">
+    <div class="c-wrapper c-fixed-components" id="app">
         @include('backend.includes.header')
         @include('includes.partials.read-only')
         @include('includes.partials.logged-in-as')
@@ -44,4 +46,5 @@
     <livewire:scripts />
     @stack('after-scripts')
 </body>
+
 </html>

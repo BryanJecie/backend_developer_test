@@ -8,10 +8,13 @@ use App\Domains\Auth\Models\Traits\Relationship\UserRelationship;
 use App\Domains\Auth\Models\Traits\Scope\UserScope;
 use App\Domains\Auth\Notifications\Frontend\ResetPasswordNotification;
 use App\Domains\Auth\Notifications\Frontend\VerifyEmail;
+use App\Models\UserPurchase;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Database\Factories\UserFactory;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -29,8 +32,6 @@ use Laragear\TwoFactor\Contracts\TwoFactorAuthenticatable;
  */
 class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenticatable, JWTSubject
 {
-    protected $connection = 'mysql_user';
-
     use AuthenticationLoggable,
         TwoFactorAuthentication,
         HasApiTokens,
@@ -49,16 +50,6 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     public const TYPE_USER = 'user';
     public const ADMIN_USER_ID = 1;
 
-    /**
-     * The Public Constructor.
-     *
-     * @var array
-     */
-    public function __construct(array $attributes = array())
-    {
-        $this->table = config('database.connections.mysql_user.database') . '.users';
-        parent::__construct($attributes);
-    }
     /**
      * The attributes that are mass assignable.
      *
@@ -118,8 +109,9 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'avatar',
         'is_online',
         'full_name',
-        'has_company',
-        'logged_out'
+        'logged_out',
+        'route_show',
+        'route_edit'
     ];
 
     /**
@@ -200,5 +192,24 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     protected static function newFactory()
     {
         return UserFactory::new();
+    }
+
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(UserPurchase::class, 'user_id');
+    }
+
+    public function routeShow(): Attribute
+    {
+        return new Attribute(function () {
+            return route('admin.auth.user.show', $this->id);
+        });
+    }
+
+    public function routeEdit(): Attribute
+    {
+        return new Attribute(function () {
+            return route('admin.auth.user.edit', $this->id);
+        });
     }
 }

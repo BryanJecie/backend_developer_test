@@ -15,11 +15,13 @@ class HomeController
      */
     public function index()
     {
-        // $appName = appName();
 
-        // return response()->json([
-        //     "message" => "Welcome to {$appName}. ✔"
-        // ]);
+
+        if (!auth()->check()) {
+            return redirect()->route('frontend.auth.login');
+        }
+
+
         return view('frontend.index');
     }
 }

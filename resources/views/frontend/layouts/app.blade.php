@@ -14,6 +14,9 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
+    @auth
+        <meta name="sanctum-token" content="{{ $logged_in_user->createToken($logged_in_user->email)->plainTextToken }}">
+    @endauth
     <livewire:styles />
     @stack('after-styles')
 </head>

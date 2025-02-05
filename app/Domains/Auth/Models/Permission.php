@@ -13,12 +13,4 @@ class Permission extends SpatiePermission
 {
     use PermissionRelationship,
         PermissionScope;
-
-    protected $connection = 'mysql_user';
-
-    public function __construct(array $attributes = array())
-    {
-        $this->table = config('boilerplate.database.admin_user_db') . '.permissions';
-        parent::__construct($attributes);
-    }
 }

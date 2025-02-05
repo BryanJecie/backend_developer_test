@@ -6,7 +6,7 @@ return [
     'table_name' => 'authentication_log',
 
     // The database connection where the authentication_log table resides. Leave empty to use the default
-    'db_connection' => 'mysql_user',
+    'db_connection' => null,
 
     // The events the package listens for to log
     'events' => [

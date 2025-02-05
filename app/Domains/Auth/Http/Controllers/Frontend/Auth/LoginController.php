@@ -63,7 +63,9 @@ class LoginController
             // 'password' => array_merge(['max:100'], PasswordRules::login()),
 
             'password'         => [
-                'required', 'max:255',  'string'
+                'required',
+                'max:255',
+                'string'
                 // ->mixedCase()
                 // ->numbers()
                 // ->symbols()
@@ -89,7 +91,6 @@ class LoginController
      */
     protected function attemptLogin(Request $request)
     {
-        // dd($this->credentials($request));
         try {
             return $this->guard()->attempt(
                 $this->credentials($request),
@@ -117,16 +118,6 @@ class LoginController
             return redirect()->route('frontend.auth.login')->withFlashDanger(__('Your account has been deactivated.'));
         }
 
-        if (!$user->isMasterAdmin()) {
-            auth()->logout();
-
-            return redirect()->route('frontend.auth.login')->withFlashDanger(__('You do not have access to do that. Only Super Admin can do loggin in.'));
-        }
-
         event(new UserLoggedIn($user));
-
-        if (config('boilerplate.access.user.single_login')) {
-            auth()->logoutOtherDevices($request->password);
-        }
     }
 }

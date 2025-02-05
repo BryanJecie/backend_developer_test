@@ -65,45 +65,74 @@ class UsersTable extends DataTableComponent
             $query = $query->onlyActive();
         }
 
+        \Log::info($query->toSql());
         return $query;
         // dd($this->getAppliedFilterWithValue('search'));
         // return $query
-        //     ->when($this->getAppliedFilterWithValue('search'), fn ($query, $term) => $query->search($term))
-        //     ->when($this->getAppliedFilterWithValue('type'), fn ($query, $type) => $query->where('type', $type))
-        //     ->when($this->getAppliedFilterWithValue('active'), fn ($query, $active) => $query->where('active', $active === 'yes'))
-        //     ->when($this->getAppliedFilterWithValue('verified'), fn ($query, $verified) => $verified === 'yes' ? $query->whereNotNull('email_verified_at') : $query->whereNull('email_verified_at'));
+        //     ->when($this->getAppliedFilterWithValue('search'), fn($query, $term) => $query->search($term))
+        //     ->when($this->getAppliedFilterWithValue('type'), fn($query, $type) => $query->where('type', $type))
+        //     ->when($this->getAppliedFilterWithValue('active'), fn($query, $active) => $query->where('active', $active === 'yes'))
+        //     ->when($this->getAppliedFilterWithValue('verified'), fn($query, $verified) => $verified === 'yes' ? $query->whereNotNull('email_verified_at') : $query->whereNull('email_verified_at'));
     }
 
+    // public function columns(): array
+    // {
+    //     return [
+    //         // Column::make('ID', 'id')
+    //         //     ->sortable()
+    //         //     ->setSortingPillTitle('Key')
+    //         //     ->setSortingPillDirections('0-9', '9-0')
+    //         //     ->secondaryHeader(function ($rows) {
+    //         //         return $rows->sum('id');
+    //         //     })
+    //         //     ->html(),
+
+    //         Column::make(__('Type'))
+    //             ->sortable(),
+    //         Column::make(__('Name'))
+    //             ->sortable()
+    //             ->searchable(),
+    //         Column::make(__('E-mail'), 'email')
+    //             ->sortable()
+    //             ->searchable(),
+    //         Column::make(__('Status'), 'active')
+    //             ->sortable()
+    //             ->searchable(),
+    //         Column::make(__('Verified'), 'email_verified_at')
+    //             ->sortable(),
+    //         // Column::make(__('2FA'), 'two_factor_auth_count')
+    //         //     ->sortable(),
+    //         // Column::make(__('Roles')),
+    //         // Column::make(__('Additional Permissions')),
+    //         Column::make(__('Actions')),
+    //     ];
+    // }
+
+
+    // /**
+    //  * @return array
+    //  */
     public function columns(): array
     {
         return [
-            // Column::make('ID', 'id')
-            //     ->sortable()
-            //     ->setSortingPillTitle('Key')
-            //     ->setSortingPillDirections('0-9', '9-0')
-            //     ->secondaryHeader(function ($rows) {
-            //         return $rows->sum('id');
-            //     })
-            //     ->html(),
-
             Column::make(__('Type'))
                 ->sortable(),
             Column::make(__('Name'))
-                ->sortable()
-                ->searchable(),
+                ->sortable(),
             Column::make(__('E-mail'), 'email')
-                ->sortable()
-                ->searchable(),
-            Column::make(__('Status'), 'active')
-                ->sortable()
-                ->searchable(),
+                ->sortable(),
             Column::make(__('Verified'), 'email_verified_at')
                 ->sortable(),
             // Column::make(__('2FA'), 'two_factor_auth_count')
             //     ->sortable(),
             // Column::make(__('Roles')),
             // Column::make(__('Additional Permissions')),
-            //    Column::make(__('Actions')),
+            // Column::make(__('Actions')),
+
+            // Column::make(__('Actions'))
+            //     ->format(function ($value, $row, $column) {
+            //         return view('backend.auth.user.includes.actions', ['user' => $row]);
+            //     }),
         ];
     }
 
@@ -151,10 +180,10 @@ class UsersTable extends DataTableComponent
         ];
     }
 
-    // public function rowView(): string
-    // {
-    //     return 'backend.auth.user.includes.row';
-    // }
+    public function rowView(): string
+    {
+        return 'backend.auth.user.includes.row';
+    }
 
 
 

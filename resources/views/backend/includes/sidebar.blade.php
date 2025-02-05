@@ -9,25 +9,19 @@
                 icon="c-sidebar-nav-icon cil-speedometer" :text="__('Dashboard')" />
         </li>
 
-
-        <li class="c-sidebar-nav-item">
-            <x-utils.link class="c-sidebar-nav-link" href="/admin/api/docs" icon="c-sidebar-nav-icon cil-book"
-                :text="__('API Docs')" />
-        </li>
-
-        @if (!app()->environment(['production']))
+        @if (
+            $logged_in_user->hasAllAccess() ||
+                ($logged_in_user->can('admin.access.user.list') ||
+                    $logged_in_user->can('admin.access.user.deactivate') ||
+                    $logged_in_user->can('admin.access.user.reactivate') ||
+                    $logged_in_user->can('admin.access.user.clear-session') ||
+                    $logged_in_user->can('admin.access.user.impersonate') ||
+                    $logged_in_user->can('admin.access.user.change-password')))
             <li class="c-sidebar-nav-item">
-
-                <x-utils.link class="c-sidebar-nav-link" href="/admin/telescope" icon="c-sidebar-nav-icon cil-graph"
-                    :text="__('Telescope')" />
+                <x-utils.link icon="c-sidebar-nav-icon cil-user" :href="route('admin.auth.user.index')" class="c-sidebar-nav-link"
+                    :text="__('Users')" :active="activeClass(Route::is('admin.auth.user.*'), 'c-active')" />
             </li>
         @endif
-
-        <li class="c-sidebar-nav-item">
-            <x-utils.link class="c-sidebar-nav-link" href="/admin/horizon" icon="c-sidebar-nav-icon cil-monitor"
-                :text="__('Horizon')" />
-        </li>
-
 
         @if (
             $logged_in_user->hasAllAccess() ||
@@ -37,6 +31,15 @@
                     $logged_in_user->can('admin.access.user.clear-session') ||
                     $logged_in_user->can('admin.access.user.impersonate') ||
                     $logged_in_user->can('admin.access.user.change-password')))
+            <li class="c-sidebar-nav-item">
+                <x-utils.link icon="c-sidebar-nav-icon cil-briefcase" :href="route('admin.products.index')" class="c-sidebar-nav-link"
+                    :text="__('Products')" :active="activeClass(Route::is('admin.products.*'), 'c-active')" />
+            </li>
+        @endif
+
+
+
+        {{-- @if ($logged_in_user->hasAllAccess() || ($logged_in_user->can('admin.access.user.list') || $logged_in_user->can('admin.access.user.deactivate') || $logged_in_user->can('admin.access.user.reactivate') || $logged_in_user->can('admin.access.user.clear-session') || $logged_in_user->can('admin.access.user.impersonate') || $logged_in_user->can('admin.access.user.change-password')))
             <li class="c-sidebar-nav-title">@lang('System')</li>
 
             <li
@@ -45,14 +48,7 @@
                     :text="__('Access')" />
 
                 <ul class="c-sidebar-nav-dropdown-items">
-                    @if (
-                        $logged_in_user->hasAllAccess() ||
-                            ($logged_in_user->can('admin.access.user.list') ||
-                                $logged_in_user->can('admin.access.user.deactivate') ||
-                                $logged_in_user->can('admin.access.user.reactivate') ||
-                                $logged_in_user->can('admin.access.user.clear-session') ||
-                                $logged_in_user->can('admin.access.user.impersonate') ||
-                                $logged_in_user->can('admin.access.user.change-password')))
+                    @if ($logged_in_user->hasAllAccess() || ($logged_in_user->can('admin.access.user.list') || $logged_in_user->can('admin.access.user.deactivate') || $logged_in_user->can('admin.access.user.reactivate') || $logged_in_user->can('admin.access.user.clear-session') || $logged_in_user->can('admin.access.user.impersonate') || $logged_in_user->can('admin.access.user.change-password')))
                         <li class="c-sidebar-nav-item">
                             <x-utils.link :href="route('admin.auth.user.index')" class="c-sidebar-nav-link" :text="__('User Management')"
                                 :active="activeClass(Route::is('admin.auth.user.*'), 'c-active')" />
@@ -67,23 +63,7 @@
                     @endif
                 </ul>
             </li>
-        @endif
-
-        @if ($logged_in_user->hasAllAccess())
-            <li class="c-sidebar-nav-dropdown">
-                <x-utils.link href="#" icon="c-sidebar-nav-icon cil-list" class="c-sidebar-nav-dropdown-toggle"
-                    :text="__('Logs')" />
-
-                <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link :href="route('log-viewer::dashboard')" class="c-sidebar-nav-link" :text="__('Dashboard')" />
-                    </li>
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link :href="route('log-viewer::logs.list')" class="c-sidebar-nav-link" :text="__('Logs')" />
-                    </li>
-                </ul>
-            </li>
-        @endif
+        @endif --}}
     </ul>
 
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"
